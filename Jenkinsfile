@@ -19,5 +19,18 @@ pipeline {
                 }
             }
         }
+        
+        stage('Push image to hub'){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'dockerpwd', variable: 'dockerhubpwd')]) {
+                        sh 'docker login -u lakshmansai -p ${dockerhubpwd}'
+                    }
+                    sh 'docker push lakshmansai/kubernetes'
+                }
+            }
+        }
+        
     }
 }
+
